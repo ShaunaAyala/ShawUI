@@ -1230,12 +1230,13 @@ end
 -- 'barsize'    integer number of buttons,
 -- 'formfactor' string formfactor in cols x rows,
 -- 'padding'    the spacing between buttons
-function pfUI.api.BarLayoutSize(bar,barsize,formfactor,iconsize,bordersize,padding)
+function pfUI.api.BarLayoutSize(bar,barsize,formfactor,iconsize,bordersize,padding,iconheight)
   assert(barsize > 0 and barsize <= NUM_ACTIONBAR_BUTTONS,"BarLayoutSize: barsize "..tostring(barsize).." is invalid")
+  local iconheight = iconheight or iconsize
   local formfactor = pfUI.api.BarLayoutFormfactor(formfactor)
   local cols, rows = unpack(pfGridmath[barsize][formfactor])
   local width = (iconsize + bordersize*2+padding) * cols + padding
-  local height = (iconsize + bordersize*2+padding) * rows + padding
+  local height = (iconheight + bordersize*2+padding) * rows + padding
   bar._size = {width,height}
   return bar._size
 end

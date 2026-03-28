@@ -618,7 +618,7 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
     pfUI.gui.title:SetPoint("TOPLEFT", pfUI.gui, "TOPLEFT", 8, -8)
     pfUI.gui.title:SetJustifyH("LEFT")
     pfUI.gui.title:SetFont(pfUI.media["font:Hooge.ttf"], 10)
-    pfUI.gui.title:SetText("|cff33ffccpf|rUI")
+    pfUI.gui.title:SetText("|cff33ffccShaw|rUI")
 
     pfUI.gui.version = pfUI.gui:CreateFontString("Status", "LOW", "GameFontNormal")
     pfUI.gui.version:SetFontObject(GameFontWhite)
@@ -1545,7 +1545,7 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
         CreateQuestionDialog(T["Do you really want to reset |cffffaaaaEVERYTHING|r?\n\nThis will reset:\n - Current Configuration\n - Current Frame Positions\n - Firstrun Wizard\n - Addon Cache\n - Saved Profiles"],
           function()
             _G["pfUI_init"] = {}
-            _G["pfUI_config"] = pfUI.api.CopyTable(pfUI_profiles["Modern"])
+            _G["pfUI_config"] = pfUI.api.CopyTable(pfUI_profiles["ShawUI"])
             _G["pfUI_playerDB"] = {}
             _G["pfUI_profiles"] = {}
             _G["pfUI_cache"] = {}
@@ -1558,7 +1558,7 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
       CreateConfig(nil, T["Configuration"], C.global, "profile", "button", function()
         CreateQuestionDialog(T["Do you really want to reset your configuration?\nThis also includes frame positions"],
           function()
-            _G["pfUI_config"] = pfUI.api.CopyTable(pfUI_profiles["Modern"])
+            _G["pfUI_config"] = pfUI.api.CopyTable(pfUI_profiles["ShawUI"])
             _G["pfUI_init"] = {}
             pfUI:LoadConfig()
             this:GetParent():Hide()
@@ -2592,12 +2592,14 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
       {3, T["Right Actionbar"]},
       {4, T["Vertical Actionbar"]},
 
-      -- special
-      {2, T["Paging Actionbar"]},
+      -- stance
       {7, T["Stance Bar 1"]},
       {8, T["Stance Bar 2"]},
       {9, T["Stance Bar 3"]},
       {10, T["Stance Bar 4"]},
+
+      -- special
+      {2, T["Paging Actionbar"]},
 
       -- class
       {11, T["Shapeshift Bar"]},
@@ -2625,6 +2627,8 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
         end
 
         CreateConfig(U["bars"], T["Icon Size"], C.bars["bar"..id], "icon_size")
+        CreateConfig(U["bars"], T["Icon Height"], C.bars["bar"..id], "icon_height")
+        CreateConfig(U["bars"], T["Lock Bar"], C.bars["bar"..id], "locked", "checkbox")
         CreateConfig(U["bars"], T["Spacing"], C.bars["bar"..id], "spacing", "dropdown", pfUI.gui.dropdowns.actionbarbuttons)
         CreateConfig(U["bars"], T["Layout"], C.bars["bar"..id], "formfactor", "dropdown", formfactors)
         CreateConfig(U["bars"], T["Bar Background"], C.bars["bar"..id], "background", "checkbox")

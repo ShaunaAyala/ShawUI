@@ -136,10 +136,10 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
     [12] = "BONUSACTIONBUTTON",
     -- additional keybinds
     [2] = "PFPAGING",
-    [7] = "PFSTANCEONE",
-    [8] = "PFSTANCETWO",
-    [9] = "PFSTANCETHREE",
-    [10] = "PFSTANCEFOUR",
+    [7] = "PFEXTRAONE",
+    [8] = "PFEXTRATWO",
+    [9] = "PFEXTRATHREE",
+    [10] = "PFEXTRAFOUR",
   }
 
   local blizzbarmapping = {
@@ -1198,10 +1198,15 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
     end
 
     -- set keydown option
-    if C.bars.keydown == "1" then
-      f:RegisterForClicks("LeftButtonDown", "RightButtonDown")
+    if C.bars["bar"..bar].locked == "1" then
+      f:EnableMouse(false)
     else
-      f:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+      f:EnableMouse(true)
+      if C.bars.keydown == "1" then
+        f:RegisterForClicks("LeftButtonDown", "RightButtonDown")
+      else
+        f:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+      end
     end
 
     -- set animation
@@ -1261,7 +1266,12 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
 
     -- general appearance
     f.showempty = showempty == "1" and true or nil
-    f:SetHeight(size)
+    local icon_height = tonumber(C.bars["bar"..bar].icon_height)
+    if icon_height and icon_height > 0 then
+      f:SetHeight(icon_height)
+    else
+      f:SetHeight(size)
+    end
     f:SetWidth(size)
     CreateBackdrop(f, border)
 
@@ -1273,6 +1283,8 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
     local buttonbasename = "pfActionBar" .. barnames[i] .. "Button"
     local enable = C.bars["bar"..i].enable
     local size = C.bars["bar"..i].icon_size
+    local icon_height_cfg = tonumber(C.bars["bar"..i].icon_height)
+    local icon_height = (icon_height_cfg and icon_height_cfg > 0) and icon_height_cfg or nil
     local spacing = C.bars["bar"..i].spacing
     local background = C.bars["bar"..i].background
     local formfactor = C.bars["bar"..i].formfactor
@@ -1438,7 +1450,7 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
     end
 
     -- adjust actionbar size
-    BarLayoutSize(bars[i], buttons, formfactor, size, border, spacing)
+    BarLayoutSize(bars[i], buttons, formfactor, size, border, spacing, icon_height)
     bars[i]:SetWidth(bars[i]._size[1])
     bars[i]:SetHeight(bars[i]._size[2])
     bars[i]:ClearAllPoints()
@@ -1566,10 +1578,10 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
   -- Localize custom keybinds for additional actionbars (see Bindings.xml)
   local names = {
     ["PAGING"] = T["Paging Actionbar"],
-    ["STANCEONE"] = T["Stance Bar 1"],
-    ["STANCETWO"] = T["Stance Bar 2"],
-    ["STANCETHREE"] = T["Stance Bar 3"],
-    ["STANCEFOUR"] = T["Stance Bar 4"],
+    ["EXTRAONE"] = T["Stance Bar 1"],
+    ["EXTRATWO"] = T["Stance Bar 2"],
+    ["EXTRATHREE"] = T["Stance Bar 3"],
+    ["EXTRAFOUR"] = T["Stance Bar 4"],
   }
 
   for name, loc in pairs(names) do
@@ -1622,10 +1634,10 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
       ["MULTIACTIONBAR3BUTTON%d"] = 3, -- MultiBarRight
       ["MULTIACTIONBAR4BUTTON%d"] = 4, -- MultiBarLeft
       ["PFPAGING%d"] = 2,
-      ["PFSTANCEONE%d"] = 7,
-      ["PFSTANCETWO%d"] = 8,
-      ["PFSTANCETHREE%d"] = 9,
-      ["PFSTANCEFOUR%d"] = 10,
+      ["PFEXTRAONE%d"] = 7,
+      ["PFEXTRATWO%d"] = 8,
+      ["PFEXTRATHREE%d"] = 9,
+      ["PFEXTRAFOUR%d"] = 10,
     }
 
     -- rebind all existing bindings to our own buttons
