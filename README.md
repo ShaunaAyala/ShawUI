@@ -2,8 +2,7 @@
 
 A custom World of Warcraft interface built on top of [pfUI](https://github.com/shagu/pfUI), tailored for [Turtle WoW](https://turtle-wow.org/).
 
-<!-- PREVIEW IMAGE: replace the path below with your screenshot -->
-![ShawUI Preview](preview.png)
+![ShawUI Preview](https://i.imgur.com/JWPISNy.jpeg)
 
 ---
 
@@ -14,7 +13,6 @@ ShawUI is a personalized UI configuration and fork of pfUI, focused on a clean a
 ### Features
 
 - Complete UI replacement — action bars, unit frames, nameplates, bags, chat, minimap, and more
-- Optimized for Turtle WoW 1.18.x
 - Compatible with Nampower, SuperWoW, and UnitXP SP3
 - Swing timer, castbar improvements, and hunter bar enhancements
 - Addon skinning support via [pfUI-addonskinner](https://github.com/dein0s/pfUI-addonskinner)
